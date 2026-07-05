@@ -35,7 +35,7 @@ export default function IntroScreen({ state, dispatch }) {
       
       {/* Top Badge */}
       <div className="intro-top-badge">
-        ✨Curriculum · Expanded form Grade 3
+        ✨Curriculum · Expanded form Grade 4
       </div>
 
       {/* Main Title */}
