@@ -1,0 +1,63 @@
+/* ─── App Shell ─────────────────────────────────────────────────────────── */
+.app-shell {
+  width: 100vw;
+  height: 100dvh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.phase-content {
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  align-items: stretch;
+  position: relative;
+  padding-top: 64px; /* account for progress bar */
+}
+
+/* ─── Home & Audio Buttons ──────────────────────────────────────────────── */
+.home-btn {
+  position: fixed;
+  top: 14px;
+  left: 14px;
+  z-index: 200;
+  background: rgba(255,193,7,0.15);
+  border: 1px solid rgba(255,193,7,0.4);
+  color: var(--gold);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.88rem;
+  border-radius: var(--radius-full);
+  padding: 7px 16px;
+  backdrop-filter: blur(10px);
+  transition: var(--transition);
+  min-height: 36px;
+}
+.home-btn:hover { background: rgba(255,193,7,0.28); }
+
+.audio-btn {
+  position: fixed;
+  top: 14px;
+  right: 14px;
+  z-index: 200;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-full);
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.15);
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(10px);
+  transition: var(--transition);
+  color: var(--text-primary);
+}
+.audio-btn:hover { background: rgba(255,255,255,0.18); }
+
+/* ─── Phase transitions ─────────────────────────────────────────────────── */
+.phase-enter {
+  animation: slideInUp 0.4s ease both;
+}

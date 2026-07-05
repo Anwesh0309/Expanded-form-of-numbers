@@ -1,0 +1,62 @@
+.play-wrap {
+  flex: 1; display: flex; flex-direction: column; gap: 8px;
+  padding: 10px; overflow: hidden; z-index: 1; position: relative;
+}
+.play-hud {
+  display: flex; align-items: center; justify-content: space-between;
+  background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08);
+  border-radius: var(--radius-md); padding: 8px 14px; gap: 10px; flex-wrap: wrap;
+}
+.hud-center { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+.hud-district { color: var(--gold); }
+.hud-progress { color: var(--text-muted); }
+.hud-right { display: flex; align-items: center; gap: 10px; }
+.hud-xp { color: var(--gold-light); }
+
+.play-progress-bar {
+  height: 6px; background: rgba(255,255,255,0.1); border-radius: 3px; overflow: hidden;
+}
+.play-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--gold), var(--green));
+  border-radius: 3px;
+  transition: width 0.4s ease;
+}
+
+.play-question-area {
+  flex: 1; overflow-y: auto; overflow-x: hidden; display: flex; flex-direction: column;
+}
+
+.xp-toast {
+  position: fixed; top: 80px; right: 20px; z-index: 400;
+  background: linear-gradient(135deg, #ffc107, #f9a825);
+  color: #1a1a2e;
+  font-family: var(--font-display); font-weight: 900;
+  font-size: clamp(1rem, 1.5vw, 1.3rem);
+  padding: 8px 18px; border-radius: var(--radius-full);
+  animation: floatUp 1.6s ease forwards;
+  pointer-events: none;
+}
+
+/* Map & Done */
+.play-map-wrap, .play-done-wrap {
+  flex: 1; display: flex; align-items: center; justify-content: center;
+  padding: 12px; overflow: hidden; z-index: 1;
+}
+.play-map-card, .play-done-card {
+  max-width: 700px; width: 100%;
+  padding: clamp(16px, 2vw, 28px);
+  display: flex; flex-direction: column; gap: 14px; align-items: center;
+}
+.play-map-title { color: var(--gold); }
+.play-done-icon { font-size: clamp(3rem, 6vw, 5rem); }
+.play-done-title { color: var(--gold); text-align: center; }
+.play-done-stats { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+.stat-pill {
+  display: flex; gap: 6px; align-items: center;
+  background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12);
+  border-radius: var(--radius-full); padding: 6px 16px;
+  font-family: var(--font-display); font-size: clamp(0.85rem, 1.1vw, 1.1rem); font-weight: 700;
+  color: var(--text-primary);
+}
+.play-done-cta { font-size: clamp(1rem, 1.4vw + 0.2rem, 1.2rem); padding: 14px 32px; }
