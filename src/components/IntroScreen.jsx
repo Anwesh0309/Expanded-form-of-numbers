@@ -8,7 +8,7 @@ const JOURNEY = [
   { num:'01', icon:'🔍', label:'Wonder',   desc:'Spark your curiosity' },
   { num:'02', icon:'📖', label:'Story',    desc:'Hear the tale' },
   { num:'03', icon:'🧪', label:'Simulate', desc:'Explore & discover' },
-  { num:'04', icon:'🎮', label:'Play',     desc:'Test your skills' },
+  { num:'04', icon:'🎮', label:'Practice', desc:'Test your skills' },
   { num:'05', icon:'📓', label:'Reflect',  desc:'What did you learn?' },
 ];
 

@@ -177,20 +177,10 @@ export default function App() {
     <div className="app-shell">
       <FloatingNumbers />
       {state.phase !== 'intro' && (
-        <header className="app-header" style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          padding: '14px 20px',
-          background: 'transparent',
-          width: '100%',
-          position: 'fixed',
-          top: 0, left: 0, zIndex: 150,
-          pointerEvents: 'none'
-        }}>
-          <button className="home-btn" onClick={goHome} aria-label="Home" style={{ pointerEvents: 'auto' }}>🏠 Home</button>
+        <header className="app-header">
+          <button className="home-btn" onClick={goHome} aria-label="Home">🏠 Home</button>
           
-          <div className="header-progress" style={{ flex: 1, display: 'flex', justifyContent: 'center', pointerEvents: 'auto' }}>
+          <div className="header-progress">
             <ProgressMap 
               currentPhase={state.phase} 
               phaseComplete={state.phaseComplete} 
@@ -199,12 +189,10 @@ export default function App() {
               onSelectPhase={(pKey) => dispatch({ type: 'SET_PHASE', payload: pKey })}
             />
           </div>
-
-          <div style={{ width: '80px' }} />
         </header>
       )}
 
-      <main className="phase-content" style={{ marginTop: state.phase !== 'intro' ? '60px' : '0' }}>
+      <main className="phase-content">
         {state.phase === 'intro'    && <IntroScreen   state={state} dispatch={dispatch} />}
         {state.phase === 'wonder'   && <WonderPhase   state={state} dispatch={dispatch} />}
         {state.phase === 'story'    && <StoryPhase    state={state} dispatch={dispatch} />}

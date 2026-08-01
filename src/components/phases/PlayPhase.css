@@ -2,25 +2,87 @@
   flex: 1; display: flex; flex-direction: column; gap: 8px;
   padding: 10px; overflow: hidden; z-index: 1; position: relative;
 }
-.play-hud {
-  display: flex; align-items: center; justify-content: space-between;
-  background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08);
-  border-radius: var(--radius-md); padding: 8px 14px; gap: 10px; flex-wrap: wrap;
+/* ─── Topic Badge (Top Pink Floating Pill) ────────────────────────────── */
+.play-topic-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: linear-gradient(135deg, #ff4b72, #ff2a55);
+  color: #ffffff;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 0.95rem;
+  padding: 7px 22px;
+  border-radius: 40px;
+  margin: 4px auto 10px auto;
+  box-shadow: 0 4px 16px rgba(255, 42, 85, 0.4);
 }
-.hud-center { display: flex; flex-direction: column; align-items: center; gap: 2px; }
-.hud-district { color: var(--gold); }
-.hud-progress { color: var(--text-muted); }
-.hud-right { display: flex; align-items: center; gap: 10px; }
-.hud-xp { color: var(--gold-light); }
 
-.play-progress-bar {
-  height: 6px; background: rgba(255,255,255,0.1); border-radius: 3px; overflow: hidden;
+.topic-icon {
+  font-size: 1.1rem;
 }
-.play-progress-fill {
+
+/* ─── HUD Stats Row (Stars & Streak Pills) ───────────────────────────── */
+.play-hud-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 680px;
+  margin: 0 auto 10px auto;
+}
+
+.hud-pill {
+  background: rgba(30, 25, 60, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 30px;
+  padding: 6px 18px;
+  color: #ffffff;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+}
+
+.hud-pill-icon {
+  font-size: 1.1rem;
+}
+
+/* ─── Progress Line Track ────────────────────────────────────────────────── */
+.play-progress-container {
+  width: 100%;
+  max-width: 680px;
+  margin: 0 auto 14px auto;
+}
+
+.play-progress-labels {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+  color: rgba(255, 255, 255, 0.65);
+  font-family: var(--font-display);
+  font-size: 0.88rem;
+  font-weight: 700;
+}
+
+.play-progress-bar-track {
+  width: 100%;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.play-progress-bar-fill {
   height: 100%;
-  background: linear-gradient(90deg, var(--gold), var(--green));
-  border-radius: 3px;
-  transition: width 0.4s ease;
+  background: linear-gradient(90deg, #7c4dff, #b388ff);
+  border-radius: 2px;
+  transition: width 0.3s ease;
 }
 
 .play-question-area {

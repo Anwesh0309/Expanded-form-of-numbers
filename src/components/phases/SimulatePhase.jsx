@@ -105,7 +105,7 @@ export default function SimulatePhase({ state, dispatch }) {
           </div>
           {s < 3
             ? <button className="btn-outline" onClick={goToNext} disabled={!state.simStationsComplete[s]}>Next Station →</button>
-            : (state.simStationsComplete[3] ? <button className="btn-primary" onClick={() => { stopAll(); dispatch({ type: 'SET_PHASE', payload: 'play' }); }}>Start Playing! 🎮</button> : null)
+            : (state.simStationsComplete[3] ? <button className="btn-primary" onClick={() => { stopAll(); dispatch({ type: 'SET_PHASE', payload: 'play' }); }}>Start Practicing! 🎮</button> : null)
           }
         </div>
       </div>

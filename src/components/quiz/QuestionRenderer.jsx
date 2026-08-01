@@ -17,8 +17,18 @@ export default function QuestionRenderer({ question, onAnswer, hintsShown, showH
     ones:         digits.ones,
   } : null;
 
+  const categoryTag = question.category || (type === 'mcq' ? 'EXPANDED FORM' : 'PLACE VALUE');
+
   return (
     <div className="qr-wrap glass-card">
+      {/* Top category badge tag matching screenshot */}
+      <div className="qr-category-badge">
+        <span className="cat-icon">➗</span> {categoryTag.toUpperCase()}
+      </div>
+
+      {/* Question text */}
+      <p className="qr-question">{questionText}</p>
+
       {/* Visual aid */}
       {pvDigits && (visual === 'chart' || visual === 'compare') && (
         <div className="qr-visual">
@@ -43,10 +53,7 @@ export default function QuestionRenderer({ question, onAnswer, hintsShown, showH
         </div>
       )}
 
-      {/* Question text */}
-      <p className="qr-question body-text">{questionText}</p>
-
-      {/* Options — 2×2 grid for 4 options, 1×2 for 2 options */}
+      {/* Options — 2×2 grid */}
       <div className={`qr-options ${options?.length === 2 ? 'two-cols' : 'four-cols'}`}>
         {options?.map((opt, i) => (
           <button
@@ -56,7 +63,6 @@ export default function QuestionRenderer({ question, onAnswer, hintsShown, showH
             disabled={isLocked}
             aria-label={`Option: ${opt}`}
           >
-            <span className="qr-opt-letter">{String.fromCharCode(65 + i)}</span>
             <span className="qr-opt-text">{opt}</span>
           </button>
         ))}

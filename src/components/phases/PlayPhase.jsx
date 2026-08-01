@@ -144,7 +144,7 @@ export default function PlayPhase({ state, dispatch }) {
       <div className="play-done-wrap">
         <div className="play-done-card glass-card anim-bounce-in">
           <div className="play-done-icon">🏆</div>
-          <h2 className="play-done-title headline">Play Phase Complete!</h2>
+          <h2 className="play-done-title headline">Practice Phase Complete!</h2>
           <div className="play-done-stats">
             <div className="stat-pill"><span>✅</span><span>{totalCorrect}/100 Correct</span></div>
             <div className="stat-pill"><span>⭐</span><span>{state.xp} XP</span></div>
@@ -189,24 +189,33 @@ export default function PlayPhase({ state, dispatch }) {
 
   return (
     <div className="play-wrap">
-      {/* HUD */}
-      <div className="play-hud">
-        <div className="hud-center">
-          <span className="hud-district label-text">{DISTRICT_NAMES[distIdx]}</span>
-          <span className="hud-progress label-text">{qInDistrict + 1}/10</span>
+      {/* District Topic Badge floating above card */}
+      <div className="play-topic-badge">
+        <span className="topic-icon">🍎</span> {DISTRICT_NAMES[distIdx]}
+      </div>
+
+      {/* Stats Row (XP & Streak) */}
+      <div className="play-hud-row">
+        <div className="hud-pill">
+          <span className="hud-pill-icon">⭐</span> {state.xp}
         </div>
-        <div className="hud-right">
-          <StreakCounter streak={state.streak} />
-          <span className="hud-xp label-text">⭐ {state.xp} XP</span>
+        <div className="hud-pill">
+          <span className="hud-pill-icon">🔥</span> {state.streak}x
         </div>
       </div>
 
-      {/* Progress bar */}
-      <div className="play-progress-bar">
-        <div className="play-progress-fill" style={{ width: `${((qInDistrict + 1) / 10) * 100}%` }} />
+      {/* Question Progress Tracker */}
+      <div className="play-progress-container">
+        <div className="play-progress-labels">
+          <span>Question {qInDistrict + 1}/10</span>
+          <span>{Math.round((qInDistrict / 10) * 100)}%</span>
+        </div>
+        <div className="play-progress-bar-track">
+          <div className="play-progress-bar-fill" style={{ width: `${((qInDistrict + 1) / 10) * 100}%` }} />
+        </div>
       </div>
 
-      {/* Question */}
+      {/* Question Renderer */}
       {question && (
         <div className="play-question-area">
           <QuestionRenderer
@@ -220,12 +229,12 @@ export default function PlayPhase({ state, dispatch }) {
         </div>
       )}
 
-      {/* XP toast */}
+      {/* XP Toast */}
       {xpToast && (
         <div className="xp-toast anim-bounce-in" aria-live="polite">{xpToast}</div>
       )}
 
-      {/* Feedback overlay for both right and wrong answers */}
+      {/* Feedback Overlay */}
       {state.showFeedback && (
         <FeedbackOverlay
           isCorrect={state.showFeedback === 'correct'}
