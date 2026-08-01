@@ -181,25 +181,31 @@ export default function App() {
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
-          padding: '20px 30px',
+          padding: '14px 20px',
           background: 'transparent',
           width: '100%',
           position: 'fixed',
-          top: 0, left: 0, zIndex: 150
+          top: 0, left: 0, zIndex: 150,
+          pointerEvents: 'none'
         }}>
-          <button className="home-btn" onClick={goHome} aria-label="Home">🏠 Home</button>
+          <button className="home-btn" onClick={goHome} aria-label="Home" style={{ pointerEvents: 'auto' }}>🏠 Home</button>
           
-          <div className="header-progress" style={{flex: 1, display: 'flex', justifyContent: 'center'}}>
-            <ProgressMap currentPhase={state.phase} phaseComplete={state.phaseComplete} />
+          <div className="header-progress" style={{ flex: 1, display: 'flex', justifyContent: 'center', pointerEvents: 'auto' }}>
+            <ProgressMap 
+              currentPhase={state.phase} 
+              phaseComplete={state.phaseComplete} 
+              audioEnabled={state.audioEnabled}
+              onToggleAudio={() => dispatch({ type: 'TOGGLE_AUDIO' })}
+              onSelectPhase={(pKey) => dispatch({ type: 'SET_PHASE', payload: pKey })}
+            />
           </div>
 
-          <button className="audio-btn" onClick={() => dispatch({ type: 'TOGGLE_AUDIO' })} aria-label="Toggle audio">
-            {state.audioEnabled ? '🔊' : '🔇'}
-          </button>
+          <div style={{ width: '80px' }} />
         </header>
       )}
 
-      <main className="phase-content" style={{marginTop: state.phase !== 'intro' ? '60px' : '0'}}>        {state.phase === 'intro'    && <IntroScreen   state={state} dispatch={dispatch} />}
+      <main className="phase-content" style={{ marginTop: state.phase !== 'intro' ? '60px' : '0' }}>
+        {state.phase === 'intro'    && <IntroScreen   state={state} dispatch={dispatch} />}
         {state.phase === 'wonder'   && <WonderPhase   state={state} dispatch={dispatch} />}
         {state.phase === 'story'    && <StoryPhase    state={state} dispatch={dispatch} />}
         {state.phase === 'simulate' && <SimulatePhase state={state} dispatch={dispatch} />}

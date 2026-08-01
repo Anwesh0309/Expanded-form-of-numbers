@@ -2,6 +2,7 @@ import React, { useState, useCallback } from 'react';
 import './Stations.css';
 import { shuffleArray } from '../../utils/shuffle.js';
 import { generateRandomNumber, toDigits, toExpandedTerms } from '../../utils/placeValue.js';
+import { useAudio } from '../../hooks/useAudio.js';
 
 const CHIP_COLORS = ['#7C4DFF','#4A90D9','#FF8A50','#FFD54F','#66BB6A'];
 
@@ -35,7 +36,8 @@ function makeChips(n) {
   return { chips: shuffleArray(all), correctTerms };
 }
 
-export default function ExpandedFormStation({ onComplete }) {
+export default function ExpandedFormStation({ onComplete, audioEnabled }) {
+  const { narrate, stopAll, sounds } = useAudio(audioEnabled);
   const [problem, setProblem] = useState(() => {
     const n = generateRandomNumber(11000, 89999);
     return { number: n, digits: toDigits(n), ...makeChips(n) };
@@ -48,6 +50,7 @@ export default function ExpandedFormStation({ onComplete }) {
 
   function addChip(chip) {
     if (tray.find(c => c.id === chip.id)) return;
+    sounds.click();
     setTray(t => [...t, chip].sort((a, b) => b.value - a.value));
     setResult(null);
   }
@@ -58,18 +61,24 @@ export default function ExpandedFormStation({ onComplete }) {
   }
 
   function handleCheck() {
+    stopAll();
     const sorted = [...tray].sort((a, b) => b.value - a.value);
     const trayVals = sorted.map(c => c.value);
     const correctVals = [...problem.correctTerms].sort((a, b) => b - a);
     if (JSON.stringify(trayVals) === JSON.stringify(correctVals)) {
       setResult('correct');
       setScore(s => s + 1);
+      sounds.correct();
+      narrate([{ text: "Well done! You assembled the expanded form perfectly!", style: 'celebration' }]);
     } else {
       setResult('wrong');
+      sounds.wrong();
+      narrate([{ text: "Look again! Check which chips match each column of the place value chart.", style: 'encouragement' }]);
     }
   }
 
   function handleNext() {
+    stopAll();
     if (round >= ROUNDS) { onComplete(); return; }
     const n = generateRandomNumber(11000, 89999);
     setProblem({ number: n, digits: toDigits(n), ...makeChips(n) });

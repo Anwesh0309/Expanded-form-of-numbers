@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import './Stations.css';
 import { generateRandomNumber, toDigits, toExpandedTerms } from '../../utils/placeValue.js';
+import { useAudio } from '../../hooks/useAudio.js';
 
 const PV_LABELS = ['Ten-Thousands', 'Thousands', 'Hundreds', 'Tens', 'Ones'];
 const PV_VALUES = [10000, 1000, 100, 10, 1];
@@ -20,7 +21,8 @@ function generateProblem() {
   return { number: n, correctTerms, displayedTerms, errorIdx };
 }
 
-export default function SpotErrorStation({ onComplete }) {
+export default function SpotErrorStation({ onComplete, audioEnabled }) {
+  const { narrate, stopAll, sounds } = useAudio(audioEnabled);
   const [problem, setProblem] = useState(generateProblem);
   const [selected, setSelected] = useState(null);
   const [result, setResult] = useState(null);
@@ -30,16 +32,22 @@ export default function SpotErrorStation({ onComplete }) {
 
   function handleTap(idx) {
     if (result) return;
+    stopAll();
     setSelected(idx);
     if (idx === problem.errorIdx) {
       setResult('correct');
       setScore(s => s + 1);
+      sounds.correct();
+      narrate([{ text: "Great spotting! That term was wrong. Here is the correct expanded form!", style: 'celebration' }]);
     } else {
       setResult('wrong');
+      sounds.wrong();
+      narrate([{ text: "Look again! Check each place value column carefully.", style: 'encouragement' }]);
     }
   }
 
   function handleNext() {
+    stopAll();
     if (round >= ROUNDS) { onComplete(); return; }
     setProblem(generateProblem());
     setSelected(null);
@@ -48,6 +56,7 @@ export default function SpotErrorStation({ onComplete }) {
   }
 
   function handleRetry() {
+    stopAll();
     setSelected(null);
     setResult(null);
   }

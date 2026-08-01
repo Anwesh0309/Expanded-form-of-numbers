@@ -24,7 +24,7 @@ export const STORY_PANELS = [
   {
     panel: 2,
     title: "The Place Value Chart 📊",
-    text: "Siya placed each group in its own column: Ten Thousands | Thousands | Hundreds | Tens | Ones. Each column is a different place value — together they make one big number!",
+    text: "Siya placed each group in its own column: Ten Thousands, Thousands, Hundreds, Tens, and Ones. Each column is a different place value — together they make one big number!",
     character: "Siya",
     imageEmoji: "📊",
     imageBg: "linear-gradient(135deg, #01579b 0%, #0277bd 100%)",

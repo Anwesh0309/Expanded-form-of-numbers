@@ -11,10 +11,10 @@ export function wonderNarration() {
 
 export function storyNarration(panelIndex) {
   const panels = [
-    [{ text: "Siya works at a toy factory. One day, she needed to count a huge shipment of toy blocks!", style: 'statement' }],
-    [{ text: "She found 3 crates of ten-thousand blocks, 2 crates of one-thousand blocks, 4 trays of one-hundred blocks, 1 pack of ten blocks, and 6 loose blocks.", style: 'statement' }],
-    [{ text: "Siya arranged them in a place-value chart: Ten Thousands, Thousands, Hundreds, Tens, and Ones. Each column shows one part of the big number!", style: 'instruction' }],
-    [{ text: "So 3 ten-thousands plus 2 thousands plus 4 hundreds plus 1 ten plus 6 ones equals thirty-two thousand, four hundred and sixteen! That is the expanded form!", style: 'celebration' }],
+    [{ text: "Siya works at a toy factory in Singapore. One day, a huge shipment of toy blocks arrived at the warehouse! The manager said: 'We need to count every single block!'", style: 'statement' }],
+    [{ text: "Siya sorted the blocks carefully: 3 giant crates of ten-thousand blocks, 2 crates of thousand blocks, 4 trays of hundred blocks, 1 pack of ten blocks, and 6 loose unit blocks.", style: 'statement' }],
+    [{ text: "Siya placed each group in its own column: Ten Thousands, Thousands, Hundreds, Tens, and Ones. Each column is a different place value — together they make one big number!", style: 'instruction' }],
+    [{ text: "Siya wrote it all out: 30,000 + 2,000 + 400 + 10 + 6 = 32,416. This is called the EXPANDED FORM — it shows exactly what each digit is worth!", style: 'celebration' }],
   ];
   return panels[panelIndex] || panels[0];
 }

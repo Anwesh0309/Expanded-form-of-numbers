@@ -1,6 +1,7 @@
 import React, { useState, useCallback, useRef } from 'react';
 import './Stations.css';
 import PlaceValueChart from '../shared/PlaceValueChart.jsx';
+import { useAudio } from '../../hooks/useAudio.js';
 
 const COL_DEFS = [
   { key: 'tt', label: 'Ten Thousands', short: 'TTh', pv: 10000, color: '#7C4DFF' },
@@ -15,7 +16,8 @@ function fmtTerm(d, pv) {
   return v === 0 ? '0' : v.toLocaleString();
 }
 
-export default function PlaceValueSliderStation({ onComplete }) {
+export default function PlaceValueSliderStation({ onComplete, audioEnabled }) {
+  const { narrate, stopAll, sounds } = useAudio(audioEnabled);
   const [digits, setDigits] = useState({ tt: 6, th: 3, h: 4, t: 8, o: 1 });
   const prevDigits = useRef({ ...digits });
   const [changedKey, setChangedKey] = useState(null);
@@ -31,6 +33,7 @@ export default function PlaceValueSliderStation({ onComplete }) {
     const pvLabel = COL_DEFS.find(c => c.key === key)?.label || key;
     const diff = (num - prevDigits.current[key]) * pv;
     if (diff !== 0) {
+      sounds.click();
       setFeedbackMsg(`⚠️ Changing the ${pvLabel} digit moves the value by ${Math.abs(diff).toLocaleString()}!`);
     }
     setDigits(d => ({ ...d, [key]: num }));
@@ -39,10 +42,18 @@ export default function PlaceValueSliderStation({ onComplete }) {
   }
 
   function randomise() {
+    sounds.click();
     const newD = { tt: 1 + Math.floor(Math.random()*9), th: Math.floor(Math.random()*10), h: Math.floor(Math.random()*10), t: Math.floor(Math.random()*10), o: Math.floor(Math.random()*10) };
     setDigits(newD);
     setFeedbackMsg('');
     setChangedKey(null);
+  }
+
+  function handleCompleteStation() {
+    stopAll();
+    sounds.correct();
+    narrate([{ text: "Amazing! You built the number correctly!", style: 'celebration' }]);
+    onComplete();
   }
 
   const pvChartDigits = { tenThousands: digits.tt, thousands: digits.th, hundreds: digits.h, tens: digits.t, ones: digits.o };
@@ -90,7 +101,7 @@ export default function PlaceValueSliderStation({ onComplete }) {
 
         <div className="station-actions">
           <button className="btn-outline" onClick={randomise}>🎲 Random Number</button>
-          <button className="btn-green" onClick={onComplete}>Complete Station ✅</button>
+          <button className="btn-green" onClick={handleCompleteStation}>Complete Station ✅</button>
         </div>
       </div>
     </div>

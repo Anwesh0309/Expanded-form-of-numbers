@@ -37,10 +37,10 @@ const PHRASES = [
   { file: 'wonder_investigate', style: 'encouragement', text: "Let's investigate how every big number is built from smaller parts!" },
 
   // Story panels
-  { file: 'story_panel_0', style: 'statement',    text: "Siya works at a toy factory. One day, she needed to count a huge shipment of toy blocks!" },
-  { file: 'story_panel_1', style: 'statement',    text: "She found 3 crates of ten-thousand blocks, 2 crates of one-thousand blocks, 4 trays of one-hundred blocks, 1 pack of ten blocks, and 6 loose blocks." },
-  { file: 'story_panel_2', style: 'instruction',  text: "Siya arranged them in a place-value chart: Ten Thousands, Thousands, Hundreds, Tens, and Ones. Each column shows one part of the big number!" },
-  { file: 'story_panel_3', style: 'celebration',  text: "So 3 ten-thousands plus 2 thousands plus 4 hundreds plus 1 ten plus 6 ones equals thirty-two thousand, four hundred and sixteen! That is the expanded form!" },
+  { file: 'story_panel_0', style: 'statement',   text: "Siya works at a toy factory in Singapore. One day, a huge shipment of toy blocks arrived at the warehouse! The manager said: 'We need to count every single block!'", ttsText: "Siya works at a toy factory in Singapore. One day, a huge shipment of toy blocks arrived at the warehouse! The manager said: We need to count every single block!" },
+  { file: 'story_panel_1', style: 'statement',   text: "Siya sorted the blocks carefully: 3 giant crates of ten-thousand blocks, 2 crates of thousand blocks, 4 trays of hundred blocks, 1 pack of ten blocks, and 6 loose unit blocks.", ttsText: "Siya sorted the blocks carefully: three giant crates of ten-thousand blocks, two crates of thousand blocks, four trays of hundred blocks, one pack of ten blocks, and six loose unit blocks." },
+  { file: 'story_panel_2', style: 'instruction', text: "Siya placed each group in its own column: Ten Thousands, Thousands, Hundreds, Tens, and Ones. Each column is a different place value — together they make one big number!", ttsText: "Siya placed each group in its own column: Ten Thousands, Thousands, Hundreds, Tens, and Ones. Each column is a different place value — together they make one big number!" },
+  { file: 'story_panel_3', style: 'celebration', text: "Siya wrote it all out: 30,000 + 2,000 + 400 + 10 + 6 = 32,416. This is called the EXPANDED FORM — it shows exactly what each digit is worth!", ttsText: "Siya wrote it all out: thirty thousand, plus two thousand, plus four hundred, plus ten, plus six, equals thirty-two thousand, four hundred and sixteen. This is called the EXPANDED FORM — it shows exactly what each digit is worth!" },
 
   // Simulate
   { file: 'sim_station_a_intro', style: 'instruction', text: "Station A: Drag the place value blocks into the build zone to match the target number. Watch the expanded form appear as you build!" },
@@ -192,7 +192,7 @@ if (!fs.existsSync(AUDIO_DIR)) {
 }
 
 // ── Download one phrase ───────────────────────────────────────────────────
-function downloadAudio(text, style, outFile) {
+function downloadAudio(text, style, outFile, ttsText) {
   return new Promise((resolve, reject) => {
     if (fs.existsSync(outFile)) {
       console.log('  ✓ Exists:', path.basename(outFile));
@@ -200,7 +200,7 @@ function downloadAudio(text, style, outFile) {
       return;
     }
     const settings = VOICE_SETTINGS[style] || VOICE_SETTINGS.statement;
-    const body = JSON.stringify({ text, model_id: MODEL_ID, voice_settings: settings });
+    const body = JSON.stringify({ text: ttsText || text, model_id: MODEL_ID, voice_settings: settings });
     const opts = {
       hostname: 'api.elevenlabs.io',
       path:     `/v1/text-to-speech/${VOICE_ID}`,
@@ -241,7 +241,7 @@ async function main() {
   for (const p of PHRASES) {
     const outFile = path.join(AUDIO_DIR, `${p.file}.mp3`);
     try {
-      await downloadAudio(p.text, p.style, outFile);
+      await downloadAudio(p.text, p.style, outFile, p.ttsText);
       audioMapEntries[p.text] = `/assets/audio/${p.file}.mp3`;
       ok++;
       // Rate limit: 2 req/s

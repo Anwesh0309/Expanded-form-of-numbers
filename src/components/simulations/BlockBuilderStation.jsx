@@ -2,6 +2,7 @@ import React, { useState, useCallback } from 'react';
 import './Stations.css';
 import PlaceValueChart from '../shared/PlaceValueChart.jsx';
 import { generateRandomNumber, toDigits, toExpandedTerms } from '../../utils/placeValue.js';
+import { useAudio } from '../../hooks/useAudio.js';
 
 const PV_LABELS = [
   { key: 'tt', label: 'Ten-Thousand', icon: '⬛', color: '#7C4DFF', value: 10000 },
@@ -20,7 +21,8 @@ function getNewTarget() {
   return { number: total, digits: { tenThousands: fixed.tt, thousands: fixed.th, hundreds: fixed.h, tens: fixed.t, ones: fixed.o } };
 }
 
-export default function BlockBuilderStation({ onComplete }) {
+export default function BlockBuilderStation({ onComplete, audioEnabled }) {
+  const { narrate, stopAll, sounds } = useAudio(audioEnabled);
   const [target, setTarget]   = useState(() => getNewTarget());
   const [placed, setPlaced]   = useState({ tt: 0, th: 0, h: 0, t: 0, o: 0 });
   const [success, setSuccess] = useState(false);
@@ -36,9 +38,12 @@ export default function BlockBuilderStation({ onComplete }) {
     if (placed[key] >= maxVals[key]) return;
     const newPlaced = { ...placed, [key]: placed[key] + 1 };
     setPlaced(newPlaced);
+    sounds.click();
     const newTotal = newPlaced.tt * 10000 + newPlaced.th * 1000 + newPlaced.h * 100 + newPlaced.t * 10 + newPlaced.o;
     if (newTotal === target.number) {
       setSuccess(true);
+      sounds.correct();
+      narrate([{ text: "Amazing! You built the number correctly!", style: 'celebration' }]);
     }
   }
 
@@ -49,6 +54,7 @@ export default function BlockBuilderStation({ onComplete }) {
   }
 
   function newProblem() {
+    stopAll();
     setTarget(getNewTarget());
     setPlaced({ tt: 0, th: 0, h: 0, t: 0, o: 0 });
     setSuccess(false);
@@ -57,8 +63,12 @@ export default function BlockBuilderStation({ onComplete }) {
   function handleCheck() {
     if (currentTotal === target.number) {
       setSuccess(true);
+      sounds.correct();
+      narrate([{ text: "Amazing! You built the number correctly!", style: 'celebration' }]);
     } else {
       setShake(true);
+      sounds.wrong();
+      narrate([{ text: "Not quite! Try removing some blocks and try again.", style: 'encouragement' }]);
       setTimeout(() => setShake(false), 600);
     }
   }

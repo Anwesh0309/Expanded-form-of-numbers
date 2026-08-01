@@ -39,17 +39,15 @@ export default function PlayPhase({ state, dispatch }) {
 
   // Narrate question when it changes
   useEffect(() => {
-    if (!showMap && question) {
-      stopAll(); // Stop any other audio immediately
+    if (!showMap && question && !state.showFeedback) {
       const timer = setTimeout(() => {
-        // Double check no other audio plays
         narrate(playQuestionNarration(question.questionText));
       }, 400);
-      return () => { clearTimeout(timer); stopAll(); };
+      return () => { clearTimeout(timer); };
     }
-  }, [qIdx, showMap, stopAll, narrate, question]);
+  }, [qIdx, showMap, narrate, question, state.showFeedback]);
 
-  // Auto-dismiss popup after 1s
+  // Auto-dismiss popup after 2.5s to let narration sound finish
   useEffect(() => {
     if (state.showFeedback) {
       feedbackTimer.current = setTimeout(() => {
@@ -59,7 +57,7 @@ export default function PlayPhase({ state, dispatch }) {
         } else {
           handleAfterWrong();
         }
-      }, 1000);
+      }, 2500);
     }
     return () => {
       if (feedbackTimer.current) clearTimeout(feedbackTimer.current);
