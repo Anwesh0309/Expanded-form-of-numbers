@@ -124,6 +124,32 @@ export default function ReflectPhase({ state, dispatch }) {
             rows={3}
             aria-label="Learning journal entry"
           />
+          
+          <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginTop: '10px' }}>
+            <span style={{ fontSize: '0.8rem', color: '#a0a0b0', alignSelf: 'center' }}>Quick fill:</span>
+            {[
+              '84,325 = 80,000 + 4,000 + 300 + 20 + 5',
+              '45,678 = 40,000 + 5,000 + 600 + 70 + 8',
+              '90,402 = 90,000 + 400 + 2'
+            ].map(ex => (
+              <button
+                key={ex}
+                type="button"
+                onClick={() => setJournal(ex)}
+                style={{
+                  background: 'rgba(255,255,255,0.1)',
+                  border: '1px solid rgba(255,255,255,0.2)',
+                  color: '#fff',
+                  borderRadius: '16px',
+                  padding: '4px 10px',
+                  fontSize: '0.75rem',
+                  cursor: 'pointer'
+                }}
+              >
+                ✨ {ex}
+              </button>
+            ))}
+          </div>
         </div>
 
         {/* Quick XP / stats summary */}

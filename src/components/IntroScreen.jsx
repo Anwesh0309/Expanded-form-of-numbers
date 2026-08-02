@@ -59,13 +59,19 @@ export default function IntroScreen({ state, dispatch }) {
 
       {/* Journey Card */}
       <div className="journey-card">
-        <div className="journey-card-title">YOUR LEARNING JOURNEY</div>
+        <div className="journey-card-title">YOUR LEARNING JOURNEY · CLICK ANY PHASE TO START</div>
         
         <div className="journey-steps-container">
           <div className="journey-row top-row">
             {JOURNEY.slice(0, 3).map((j, i) => (
               <React.Fragment key={j.num}>
-                <div className="journey-step-item">
+                <div 
+                  className="journey-step-item clickable-step"
+                  onClick={() => dispatch({ type: 'SET_PHASE', payload: j.label.toLowerCase() === 'practice' ? 'play' : j.label.toLowerCase() })}
+                  role="button"
+                  tabIndex={0}
+                  title={`Click to open ${j.label} phase`}
+                >
                   <span className="journey-icon-circle">{j.icon}</span>
                   <div className="journey-text-col">
                     <span className="journey-item-title">{j.label}</span>
@@ -80,7 +86,13 @@ export default function IntroScreen({ state, dispatch }) {
           <div className="journey-row bottom-row">
             {JOURNEY.slice(3, 5).map((j, i) => (
               <React.Fragment key={j.num}>
-                <div className="journey-step-item">
+                <div 
+                  className="journey-step-item clickable-step"
+                  onClick={() => dispatch({ type: 'SET_PHASE', payload: j.label.toLowerCase() === 'practice' ? 'play' : j.label.toLowerCase() })}
+                  role="button"
+                  tabIndex={0}
+                  title={`Click to open ${j.label} phase`}
+                >
                   <span className="journey-icon-circle">{j.icon}</span>
                   <div className="journey-text-col">
                     <span className="journey-item-title">{j.label}</span>
@@ -98,6 +110,9 @@ export default function IntroScreen({ state, dispatch }) {
       <div className="intro-ctas">
         <button className="btn-primary intro-cta-main" onClick={startFresh}>
           🚀 Begin Your Journey!
+        </button>
+        <button className="btn-outline" onClick={() => dispatch({ type: 'SET_PHASE', payload: 'reflect' })} style={{marginTop: '12px', borderColor: '#feca57', color: '#feca57'}}>
+          📓 Jump Directly to Reflect Phase
         </button>
         {hasSaved && (
           <button className="btn-outline" onClick={resumeSession} style={{marginTop: '10px'}}>

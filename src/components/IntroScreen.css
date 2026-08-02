@@ -134,6 +134,21 @@
   align-items: center;
   gap: 12px;
 }
+.clickable-step {
+  cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 12px;
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
+}
+.clickable-step:hover {
+  background: rgba(254, 202, 87, 0.15);
+  border-color: rgba(254, 202, 87, 0.4);
+  transform: translateY(-2px);
+}
+.clickable-step:active {
+  transform: translateY(0);
+}
 .journey-icon-circle {
   width: 38px;
   height: 38px;

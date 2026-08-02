@@ -178,9 +178,14 @@ export default function PlayPhase({ state, dispatch }) {
                📊 View Results
              </button>
           ) : (
-             <button className="btn-primary" onClick={() => startDistrict(distIdx)} style={{ margin: '0 auto', display: 'block' }}>
-               🚀 Start {DISTRICT_NAMES[distIdx]}!
-             </button>
+             <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
+               <button className="btn-primary" onClick={() => startDistrict(distIdx)}>
+                 🚀 Start {DISTRICT_NAMES[distIdx]}!
+               </button>
+               <button className="btn-outline" onClick={() => dispatch({ type: 'SET_PHASE', payload: 'reflect' })} style={{ borderColor: '#feca57', color: '#feca57' }}>
+                 📓 Jump to Reflect Phase
+               </button>
+             </div>
           )}
         </div>
       </div>
@@ -190,8 +195,14 @@ export default function PlayPhase({ state, dispatch }) {
   return (
     <div className="play-wrap">
       {/* District Topic Badge floating above card */}
-      <div className="play-topic-badge">
-        <span className="topic-icon">🍎</span> {DISTRICT_NAMES[distIdx]}
+      <div className="play-topic-badge" style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+        <span><span className="topic-icon">🍎</span> {DISTRICT_NAMES[distIdx]}</span>
+        <button 
+          onClick={() => dispatch({ type: 'SET_PHASE', payload: 'reflect' })}
+          style={{ background: 'rgba(254,202,87,0.2)', border: '1px solid #feca57', color: '#feca57', borderRadius: '12px', padding: '2px 8px', fontSize: '0.75rem', cursor: 'pointer', fontWeight: 700 }}
+        >
+          📓 Reflect
+        </button>
       </div>
 
       {/* Stats Row (XP & Streak) */}
