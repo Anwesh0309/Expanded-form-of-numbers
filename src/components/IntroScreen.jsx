@@ -111,9 +111,6 @@ export default function IntroScreen({ state, dispatch }) {
         <button className="btn-primary intro-cta-main" onClick={startFresh}>
           🚀 Begin Your Journey!
         </button>
-        <button className="btn-outline" onClick={() => dispatch({ type: 'SET_PHASE', payload: 'reflect' })} style={{marginTop: '12px', borderColor: '#feca57', color: '#feca57'}}>
-          📓 Jump Directly to Reflect Phase
-        </button>
         {hasSaved && (
           <button className="btn-outline" onClick={resumeSession} style={{marginTop: '10px'}}>
             ↩ Resume Session
